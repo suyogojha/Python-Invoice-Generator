@@ -1,0 +1,38 @@
+.container-fluid {
+  margin-top: 10px;
+}
+
+.navbar {
+  background-color: #e3f2fd;
+}
+
+.avatar {
+  width: 200px;
+  margin-right: 1em;
+}
+
+.card {
+  margin-top: 1em;
+}
+
+/* .btn {
+  margin-top: 0.3em;
+} */
+
+.table > tbody > tr > .thick-line {
+  border-top: 2px solid;
+}
+
+.btn-group.special {
+  display: flex;
+}
+
+.special .btn {
+  flex: 1;
+}
+
+@media print {
+  .no-print {
+    display: None;
+  }
+}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Order Complete - POS System</title>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  {% if success %}
+  <div class="alert alert-success" role="alert">
+    <h2 class="alert-heading">Order Successful!!</h2>
+    <p class="lead">Your order has been successfull, please headover to invoice section to view your invoice</p>
+    <a class="btn btn-primary" href="{% url 'billing' %}" role="button">Continue</a>
+  </div>
+  {% else %}
+  <div class="alert alert-danger" role="alert">
+    <h2 class="alert-heading">Order Failed!</h2>
+    <a class="btn btn-primary" href="{% url 'billing' %}" role="button">Continue</a>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

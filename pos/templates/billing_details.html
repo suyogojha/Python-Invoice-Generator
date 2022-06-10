@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title> {{name}} - Billing </title>
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          {% if customer.photo %}
+            <img class="avatar img-thumbnail float-left img-fluid" src="{{ customer.photo.url }}" style="width: 200px; margin-right: 1em;"/>
+          {% else %}
+            <img class="avatar img-thumbnail float-left img-fluid" src="{% static 'img/profile_placeholder_large.png' %}" style="width: 200px; margin-right: 1em;"/>
+          {% endif %}
+          
+          <h5>{{ customer.name }}</h5>
+          <p class="card-text">Identity Number: {{ customer.identity }}</p>
+          <p class="card-text">Balance: ${{ customer.balance }}</p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-header">
+          <h5>Available Products: <small>Click the products to select </small></h5>
+        </div>
+        <div class="card-body">
+          {% for product in products %}
+            <a href="#" onclick="addItem({{ product.id }}, '{{ product.name }}', {{ product.price }})" class="btn btn-outline-dark">
+              {{ product.name }}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><strong>Order Summary</strong></h4>
+                </div>
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-condensed">
+                      <thead>
+                        <tr>
+                          <td><strong>Item</strong></td>
+                          <td class="text-right"><strong>Price</strong></td>
+                        </tr>
+                      </thead>
+                      <tbody id="summary-table-body">
+                        <tr id="total-tr">
+                          <td class="thick-line text-right"><strong>Total: </strong></td>
+                          <td class="thick-line text-right"><strong>$0 </strong></td></tr>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="btn-group special" role="group">
+            {% csrf_token %}
+            <button type="button" class="btn btn-success" onclick="postOrder('{% url 'order' %}', '{{ customer.identity }}')">Bill</button>
+            <button type="button" class="btn btn-warning" onclick="clearAllItems()">Reset</button>
+            <button type="button" class="btn btn-danger" onclick="location.href='{% url 'billing' %}'">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
